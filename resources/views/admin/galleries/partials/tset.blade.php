@@ -1,0 +1,1 @@
+<h1>Y ZY MEJOR TE KOMES MI MIERDHA {{ $user }}, {{ $galleries->first()->title }}</h1>
