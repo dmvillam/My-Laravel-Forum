@@ -59,7 +59,7 @@
                                 Editar Entrada
                             </a>
                             <a href="" class="btn btn-default pull-right" data-toggle="modal" data-target="#ModalDeleteEntry">
-                                <i class="glyphicon glyphicon-pencil"></i>
+                                <i class="glyphicon glyphicon-remove"></i>
                                 Borrar Entrada
                             </a>
                         @endif
