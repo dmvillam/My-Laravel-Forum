@@ -118,29 +118,41 @@
             @endif
         </p>
         <hr />
-        <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    Moderar imagen <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('attachment.details.edit', $attachment) }}"><i class="glyphicon glyphicon-edit"></i> Editar detalles</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-star-empty"></i> Establecer como imagen destacada</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-pushpin"></i> Fijar imagen</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-remove"></i> Ocultar imagen</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-lock"></i> Desactivar comentarios</a></li>
-                    <li><a href=""><i class="glyphicon glyphicon-share"></i> Mover imagen</a></li>
-                    <li><a class="attachmentDelete" href="" data-toggle="modal" data-target="#ModalDeleteAttachment"><i class="glyphicon glyphicon-trash"></i> Borrar imagen</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="">Historial de moderación</a></li>
-                </ul>
-            </li>
-            <li role="presentation" class="active">
-                <a href="" role="button">
-                    <i class="fa fa-exclamation-triangle"></i> Reportar imagen
-                </a>
-            </li>
-        </ul>
+
+        @if ( ! Auth::guest())
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Moderar imagen <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if (Auth::user()->IsAdmin() || $attachment->user->nickname == Auth::user()->nickname)
+                            <li><a href="{{ route('attachment.details.edit', $attachment) }}"><i class="glyphicon glyphicon-edit"></i> Editar detalles</a></li>
+                        @endif
+                        @if (Auth::user()->IsAdmin())
+                            <li><a href=""><i class="glyphicon glyphicon-star-empty"></i> Establecer como imagen destacada</a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-pushpin"></i> Fijar imagen</a></li>
+                        @endif
+                        @if (Auth::user()->IsAdmin() || $attachment->user->nickname == Auth::user()->nickname)
+                            <li><a href=""><i class="glyphicon glyphicon-remove"></i> Ocultar imagen</a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-lock"></i> Desactivar comentarios</a></li>
+                            <li><a href=""><i class="glyphicon glyphicon-share"></i> Mover imagen</a></li>
+                            <li><a class="attachmentDelete" href="" data-toggle="modal" data-target="#ModalDeleteAttachment"><i class="glyphicon glyphicon-trash"></i> Borrar imagen</a></li>
+                        @endif
+                        @if (Auth::user()->IsAdmin())
+                            <li role="separator" class="divider"></li>
+                            <li><a href="">Historial de moderación</a></li>
+                        @endif
+                    </ul>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="" role="button">
+                        <i class="fa fa-exclamation-triangle"></i> Reportar imagen
+                    </a>
+                </li>
+            </ul>
+        @endif
+
         <h1>Comentarios</h1>
 
         <div class="row commentsRow">
