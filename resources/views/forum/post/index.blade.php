@@ -126,22 +126,20 @@
                         <div class="col-md-10">
                             {{--<p>{!! $post->clean_content !!}</p>--}}
                             <p>{!! $post->content !!}</p>
-                            <p>
-                            <div class="row">
-                                <div class="col-md-8">
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="{{ route('forum.post.edit', [$thread->board, $thread, $post]) }}" role="button" class="btn btn-success"><i class="glyphicon glyphicon-pencil"></i> Editar</a>
-                                </div>
-                                {!! Form::open(['route' => ['forum.post.delete', $thread->board, $thread, $post], 'method' => 'DELETE']) !!}
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que desea eliminar?')">
-                                        <i class="glyphicon glyphicon-remove"></i> Borrar
-                                    </button>
-                                </div>
-                                {!! Form::close() !!}
-                            </div>
-                            </p>
+                            @if ( ! Auth::guest() && ! $thread->locked)
+                                @if (Auth::user()->IsAdmin() || Auth::user()->nickname == $post->user->nickname)
+                                    <p>
+                                        {!! Form::open(['route' => ['forum.post.delete', $thread->board, $thread, $post], 'method' => 'DELETE', 'style' => 'float:right']) !!}
+                                        <a href="{{ route('forum.post.edit', [$thread->board, $thread, $post]) }}" role="button" class="btn btn-success">
+                                            <i class="glyphicon glyphicon-pencil"></i> Editar
+                                        </a>
+                                        <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que desea eliminar?')">
+                                            <i class="glyphicon glyphicon-remove"></i> Borrar
+                                        </button>
+                                        {!! Form::close() !!}
+                                    </p>
+                                @endif
+                            @endif
                         </div>
                     </div>
                 </div>
